@@ -1,6 +1,21 @@
-﻿namespace xUnitDemo;
+﻿using OpenQA.Selenium.Chrome;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
-public class WebDriverFixture
+namespace xUnitDemo;
+
+public class WebDriverFixture : IDisposable
 {
-    
+    public ChromeDriver ChromeDriver { get; private set; }
+
+    public WebDriverFixture()
+    {
+        var driver = new DriverManager().SetUpDriver(new ChromeConfig());
+        ChromeDriver = new ChromeDriver();
+    }
+    public void Dispose()
+    {
+        ChromeDriver.Quit();
+        ChromeDriver.Dispose();
+    }
 }
