@@ -1,3 +1,4 @@
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
@@ -18,5 +19,17 @@ public class SeleniumWithContext(ITestOutputHelper testOutputHelper, WebDriverFi
         testOutputHelper.WriteLine("First Test");
         _chromeDriver.Navigate().GoToUrl("http://eaapp.somee.com");
     }
-    
+
+    [Fact]
+    public void ClassFixtureTestFillData()
+    {
+        var driver = _webDriverFixture.ChromeDriver;
+        driver.Navigate().GoToUrl("http://eaapp.somee.com");
+        driver.FindElement(By.LinkText("Login")).Click();
+        driver.FindElement(By.Id("UserName")).SendKeys("admin");
+        driver.FindElement(By.Id("Password")).SendKeys("password");
+        driver.FindElement(By.Id("loginIn")).Click();
+
+    }
+
 }
