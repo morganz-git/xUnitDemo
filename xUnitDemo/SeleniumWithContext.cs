@@ -5,6 +5,7 @@ using Xunit.Abstractions;
 
 namespace xUnitDemo;
 
+[Collection("Sequence")]
 // 一种构造函数的写法
 public class SeleniumWithContext(ITestOutputHelper testOutputHelper, WebDriverFixture webDriverFixture)
     : IClassFixture<WebDriverFixture>

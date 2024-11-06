@@ -2,9 +2,11 @@ using OpenQA.Selenium;
 using Xunit.Abstractions;
 
 namespace xUnitDemo;
+
 // IClassFixture<WebDriverFixture>：实现了 IClassFixture 接口，将 WebDriverFixture
 // 作为类级别的共享实例。这意味着 WebDriverFixture 的实例在该类的所有测试方法中是共享的，
 // 避免重复创建 WebDriver 实例。
+[Collection("Sequence")] //用来实现顺序测试， 一个一个跑
 public class SecondSeleniumTest : IClassFixture<WebDriverFixture>
 {
     private readonly WebDriverFixture webDriverFixture;
