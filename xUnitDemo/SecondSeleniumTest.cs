@@ -35,7 +35,10 @@ public class SecondSeleniumTest : IClassFixture<WebDriverFixture>
         driver.FindElement(By.LinkText("Login")).Click();
         driver.FindElement(By.Id("UserName")).SendKeys(username);
         driver.FindElement(By.Id("Password")).SendKeys(password);
-        driver.FindElement(By.Id("loginIn")).Click();
+//        driver.FindElement(By.Id("loginIn")).Click();
+//错误验证
+        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn")).Click());
+        Assert.Contains("no suck element", exception.Message);
 
         testOutputHelper.WriteLine("Test Done");
     }
