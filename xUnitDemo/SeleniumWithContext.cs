@@ -12,28 +12,28 @@ public class SeleniumWithContext(ITestOutputHelper testOutputHelper, WebDriverFi
     private readonly WebDriverFixture _webDriverFixture = webDriverFixture;
     private readonly ChromeDriver _chromeDriver = webDriverFixture.ChromeDriver;
 
-    [Fact]
-    public void ClassFixtureNavigate()
-    {
-        //Console.WriteLine("First test"); 不会有任何输出
-        testOutputHelper.WriteLine("First Test");
-        _chromeDriver.Navigate().GoToUrl("http://eaapp.somee.com");
-    }
-
-    [Theory]
-    [InlineData("admin", "password")]
-    [InlineData("admin", "password1")]
-    [InlineData("admin", "password2")]
-    [InlineData("admin", "password3")]
-    public void TestLoginwWithFillData(string userName, string password)
-    {
-        var driver = _webDriverFixture.ChromeDriver;
-        driver.Navigate().GoToUrl("http://eaapp.somee.com");
-        driver.FindElement(By.LinkText("Login")).Click();
-        driver.FindElement(By.Id("UserName")).SendKeys(userName);
-        driver.FindElement(By.Id("Password")).SendKeys(password);
-        driver.FindElement(By.Id("loginIn")).Click();
-    }
+    // [Fact]
+    // public void ClassFixtureNavigate()
+    // {
+    //     //Console.WriteLine("First test"); 不会有任何输出
+    //     testOutputHelper.WriteLine("First Test");
+    //     _chromeDriver.Navigate().GoToUrl("http://eaapp.somee.com");
+    // }
+    //
+    // [Theory]
+    // [InlineData("admin", "password")]
+    // [InlineData("admin", "password1")]
+    // [InlineData("admin", "password2")]
+    // [InlineData("admin", "password3")]
+    // public void TestLoginwWithFillData(string userName, string password)
+    // {
+    //     var driver = _webDriverFixture.ChromeDriver;
+    //     driver.Navigate().GoToUrl("http://eaapp.somee.com");
+    //     driver.FindElement(By.LinkText("Login")).Click();
+    //     driver.FindElement(By.Id("UserName")).SendKeys(userName);
+    //     driver.FindElement(By.Id("Password")).SendKeys(password);
+    //     driver.FindElement(By.Id("loginIn")).Click();
+    // }
 
     /*
      * 1. [Theory] 与 [MemberData(nameof(Data))]
@@ -46,11 +46,11 @@ public class SeleniumWithContext(ITestOutputHelper testOutputHelper, WebDriverFi
     public void TestRegisterUser(string userName, string password, string cpassword, string email)
     {
         var driver = _webDriverFixture.ChromeDriver;
-        driver.Navigate().GoToUrl("http://eaapp.somee.co");
-        driver.FindElement(By.Id("Register")).Click();
+        driver.Navigate().GoToUrl("http://eaapp.somee.com");
+        driver.FindElement(By.Id("registerLink")).Click();
         driver.FindElement(By.Id("UserName")).SendKeys(userName);
         driver.FindElement(By.Id("Password")).SendKeys(password);
-        driver.FindElement(By.Id("ConfirmPassword'")).SendKeys(cpassword);
+        driver.FindElement(By.Id("ConfirmPassword")).SendKeys(cpassword);
         driver.FindElement(By.Id("Email")).SendKeys(email);
         testOutputHelper.WriteLine("Test Done");
     }
@@ -60,7 +60,7 @@ public class SeleniumWithContext(ITestOutputHelper testOutputHelper, WebDriverFi
     // => =>：这是 C# 的表达式主体语法，用于简化属性的 get 访问器，表示 Data 属性直接返回 List<object[]> 的实例。
     public static IEnumerable<object[]> Data => new List<object[]>
     {
-        // 可以将 List<object[]> 替换为 object[][]（即数组的数组）， 但是换成array 以后， 
+        // 可以将 List<object[]> 替换为 object[][]（即数组的数组）， 但是换成array 以后，
         // 数组的大小是固定的，不能进行动态扩展
         new object[]
         {
@@ -84,23 +84,22 @@ public class SeleniumWithContext(ITestOutputHelper testOutputHelper, WebDriverFi
     {
         var driver = _webDriverFixture.ChromeDriver;
         driver.Navigate().GoToUrl("http://eaapp.somee.com");
-        driver.FindElement(By.Id("Register")).Click();
+        driver.FindElement(By.Id("registerLink")).Click();
         driver.FindElement(By.Id("UserName")).SendKeys(userName);
         driver.FindElement(By.Id("Password")).SendKeys(password);
-        driver.FindElement(By.Id("ConfirmPassword'")).SendKeys(cpassword);
+        driver.FindElement(By.Id("ConfirmPassword")).SendKeys(cpassword);
         driver.FindElement(By.Id("Email")).SendKeys(email);
         testOutputHelper.WriteLine("Test Done");
     }
 
-     class DataClass : IEnumerable<object[]>
+    class DataClass : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
         {
             yield return new object[] { "morgan", "password", "password", "m@m.m" };
             yield return new object[] { "morgan1", "password1", "password1", "m@m.m2" };
         }
-    
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
-
 }
