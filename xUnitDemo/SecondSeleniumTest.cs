@@ -1,3 +1,4 @@
+using FluentAssertions;
 using OpenQA.Selenium;
 using Xunit.Abstractions;
 
@@ -37,8 +38,10 @@ public class SecondSeleniumTest : IClassFixture<WebDriverFixture>
         driver.FindElement(By.Id("Password")).SendKeys(password);
 //        driver.FindElement(By.Id("loginIn")).Click();
 //错误验证
-        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn")).Click());
-        Assert.Contains("no suck element", exception.Message);
+//        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn")).Click());
+        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn - eror")).Click());
+//        Assert.Contains("no suck element", exception.Message);
+        exception.Message.Should().Contain("no such element");
 
         testOutputHelper.WriteLine("Test Done");
     }

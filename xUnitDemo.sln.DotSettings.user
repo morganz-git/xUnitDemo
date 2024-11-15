@@ -4,5 +4,6 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::751A8726-D95D-44DF-ADA1-6D68A719F051::net8.0::xUnitDemo.SecondSeleniumTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::751A8726-D95D-44DF-ADA1-6D68A719F051::net8.0::xUnitDemo.SeleniumWithContext&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::751A8726-D95D-44DF-ADA1-6D68A719F051::net8.0::xUnitDemo.SeleniumWithoutContext.Test1&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
