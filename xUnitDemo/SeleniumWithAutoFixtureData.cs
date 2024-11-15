@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using AutoFixture;
+using AutoFixture.Xunit2;
 using OpenQA.Selenium;
 using Xunit.Abstractions;
 
@@ -49,7 +50,26 @@ public class SeleniumWithAutoFixtureData : IClassFixture<WebDriverFixture>
         // var model = fixture.Build<RegisterUserModel>().Without(x => x.Email).Create();
         // 也可以自定义数据
         var model = fixture.Build<RegisterUserModel>().With(x => x.Email == "m@m.m").Create();
-        
+
+        driver.FindElement(By.Id("registerLink")).Click();
+        driver.FindElement(By.Id("UserName")).SendKeys(model.Name);
+        driver.FindElement(By.Id("Password")).SendKeys(model.Password);
+        driver.FindElement(By.Id("ConfirmPassword")).SendKeys(model.CPassword);
+        driver.FindElement(By.Id("Email")).SendKeys(model.Email);
+        _testOutputHelper.WriteLine("Test Done");
+    }
+
+    [Theory, AutoData]
+    public void TestRegisterUserWithAutoData(RegisterUserModel model)
+    {
+        var driver = _webDriverFixture.ChromeDriver;
+        driver.Navigate().GoToUrl("http://eaapp.somee.com");
+
+        // 使用 AutoFixture 库生成一个 RegisterUserModel 对象。AutoFixture 可以自动生成测试数据，简化测试用例的编写。
+        // var model = new Fixture().Create<RegisterUserModel>();
+
+
+
         driver.FindElement(By.Id("registerLink")).Click();
         driver.FindElement(By.Id("UserName")).SendKeys(model.Name);
         driver.FindElement(By.Id("Password")).SendKeys(model.Password);
