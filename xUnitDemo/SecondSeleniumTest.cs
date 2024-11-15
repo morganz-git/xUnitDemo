@@ -10,39 +10,44 @@ namespace xUnitDemo;
 [Collection("Sequence")] //用来实现顺序测试， 一个一个跑
 public class SecondSeleniumTest : IClassFixture<WebDriverFixture>
 {
-    private readonly WebDriverFixture webDriverFixture;
-    private readonly ITestOutputHelper testOutputHelper;
+    private readonly WebDriverFixture _webDriverFixture;
+    private readonly ITestOutputHelper _testOutputHelper;
 
     public SecondSeleniumTest(WebDriverFixture webDriverFixture, ITestOutputHelper testOutputHelper)
     {
-        this.webDriverFixture = webDriverFixture;
-        this.testOutputHelper = testOutputHelper;
+        _webDriverFixture = webDriverFixture;
+        _testOutputHelper = testOutputHelper;
     }
 
     [Fact]
     public void ClassFixtureNavigate()
     {
-        testOutputHelper.WriteLine("First Test");
-        webDriverFixture.ChromeDriver.Navigate().GoToUrl("http://eaapp.somee.com");
+        _testOutputHelper.WriteLine("First Test");
+        _webDriverFixture.ChromeDriver
+            .Navigate()
+            .GoToUrl("http://eaapp.somee.com");
+        var anchor = _webDriverFixture.ChromeDriver.FindElements(By.TagName("a"));
+        anchor.Should().HaveCountGreaterThan(2);
     }
 
     [Theory]
     [InlineData("admin", "password")]
     public void TestLoginWithFullData(string username, string password)
     {
-        var driver = webDriverFixture.ChromeDriver;
-        testOutputHelper.WriteLine("First Test");
+        var driver = _webDriverFixture.ChromeDriver;
+        _testOutputHelper.WriteLine("First Test");
         driver.Navigate().GoToUrl("http://eaapp.somee.com");
         driver.FindElement(By.LinkText("Login")).Click();
         driver.FindElement(By.Id("UserName")).SendKeys(username);
         driver.FindElement(By.Id("Password")).SendKeys(password);
-//        driver.FindElement(By.Id("loginIn")).Click();
-//错误验证
-//        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn")).Click());
-        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn - eror")).Click());
-//        Assert.Contains("no suck element", exception.Message);
+        //        driver.FindElement(By.Id("loginIn")).Click();
+        //错误验证
+        //        var exception = Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn")).Click());
+        var exception =
+            Assert.Throws<NoSuchElementException>(() => driver.FindElement(By.Id("LoginIn - eror")).Click());
+        //        Assert.Contains("no suck element", exception.Message);
         exception.Message.Should().Contain("no such element");
 
-        testOutputHelper.WriteLine("Test Done");
+        _testOutputHelper.WriteLine("Test Done");
     }
 }
