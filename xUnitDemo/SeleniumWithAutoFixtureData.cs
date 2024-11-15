@@ -42,8 +42,14 @@ public class SeleniumWithAutoFixtureData : IClassFixture<WebDriverFixture>
         driver.Navigate().GoToUrl("http://eaapp.somee.com");
 
         // 使用 AutoFixture 库生成一个 RegisterUserModel 对象。AutoFixture 可以自动生成测试数据，简化测试用例的编写。
-        var model = new Fixture().Create<RegisterUserModel>();
+        // var model = new Fixture().Create<RegisterUserModel>();
 
+        var fixture = new Fixture();
+        // 这样在生成数据的时候就不会包含email
+        // var model = fixture.Build<RegisterUserModel>().Without(x => x.Email).Create();
+        // 也可以自定义数据
+        var model = fixture.Build<RegisterUserModel>().With(x => x.Email == "m@m.m").Create();
+        
         driver.FindElement(By.Id("registerLink")).Click();
         driver.FindElement(By.Id("UserName")).SendKeys(model.Name);
         driver.FindElement(By.Id("Password")).SendKeys(model.Password);
